@@ -33,7 +33,7 @@ You can generate the input file by scanning a directory for MEO Cloud links:
 
 `grep -REo "(http|https)://cld.pt/[a-zA-Z0-9./?=_%:&-]*" | sort | uniq > input.txt`
 
-### Output File
+### Output
 
 The script generates a CSV file with the following columns:
 - input_path — Original file path where the URL was found
@@ -43,11 +43,14 @@ The script generates a CSV file with the following columns:
 - replace_command — Perl command to replace the old URL with the new one
 - delete_link — Link to delete the uploaded image from 8upload
 
+Additionally, the images are downloaded to the folder meocould_images.
+Each image is stored inside a folder named after its MEO Cloud UUID.
+
 ### Usage
 `./meocloud28upload.py input.txt output.csv`
 
 Where:
-- input.txt — input file containing <INPUT_PATH>:<URL> entries
+- input.txt — input file containing `<INPUT_PATH>`:`<URL>` entries
 - output.csv — CSV file where results are stored
 
 ### Example CSV Output
@@ -61,7 +64,7 @@ posts/page1.html,https://cld.pt/dl/download/3fe27c66-58fb-4c81-ae6e-1fb4f7c10b74
 Each row in the CSV contains a ready-to-use Perl command:
 
 ```
-perl -pi -e 's#\Q<OLD_URL>\E#<NEW_URL>#g' <INPUT_PATH>
+perl -pe 's#\Q<OLD_URL>\E#<NEW_URL>#g' -i <INPUT_PATH>
 ```
 
 This command allows you to update the original files with the new 8upload URLs safely and efficiently.
@@ -82,3 +85,5 @@ This command allows you to update the original files with the new 8upload URLs s
 
 This script is intended for personal use or authorized content migration only.
 Ensure you have the legal right to download and re-host all images.
+Use at your own risk. The author of this script is not responsible for any data 
+loss or any other damages resulting from its usage.
